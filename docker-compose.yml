@@ -1,0 +1,168 @@
+# services:
+#   proxy:
+#     build: proxy
+#     image: nginx_proxy
+#     ports:
+#       - "80:80" 
+ 
+#     depends_on:
+#       - backend
+    
+
+#   backend:
+#     build: backend/
+#     image : backend
+#     expose:
+#       - "8000"
+#     depends_on : 
+#       - db
+#     secrets:
+#       - db-password
+
+
+
+#   db:
+#     image: mysql:8.0
+#     environment:
+#       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db-password
+#       MYSQL_DATABASE: example
+#     volumes:
+#       - db_data:/var/lib/mysql
+
+#     secrets:
+#       - db-password
+      
+# secrets:
+#   db-password:
+#     file: ./db-pass.txt
+
+# volumes:
+#   db_data:
+
+
+
+
+version: '3.8'
+
+services:
+  proxy:
+    build: proxy/
+    image: nginx_proxy
+    ports:
+      # - "80:80"
+      - "443:443"  # Expose HTTPS
+    depends_on:
+      - backend
+
+  backend:
+    build: backend/
+    image: backend
+    ports:  # Expose backend service for external access if necessary
+      - "8000"
+
+    # expose:
+    #   - "8000"
+    depends_on:
+      - db
+    secrets:
+      - db-password
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db-password
+      MYSQL_DATABASE: example
+    volumes:
+      - db_data:/var/lib/mysql
+    secrets:
+      - db-password
+
+secrets:
+  db-password:
+    file: ./db-pass.txt
+
+volumes:
+  db_data:
+
+
+
+# services:
+#   proxy:
+#     build: proxy/
+#     image: nginx_proxy
+#     ports:
+#       - "443:443"
+#     volumes:
+#       - /etc/nginx/ssl/:/etc/nginx/ssl/
+#     depends_on:
+#       - backend
+    
+
+#   backend:
+#     build: backend/
+#     image : backend
+#     expose:
+#       - "8000"
+#     depends_on : 
+#       - db
+#     secrets:
+#       - db-password
+
+
+
+#   db:
+#     image: mysql:8.0
+#     environment:
+#       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db-password
+#       MYSQL_DATABASE: example
+#     volumes:
+#       - db_data:/var/lib/mysql
+
+#     secrets:
+#       - db-password
+      
+# secrets:
+#   db-password:
+#     file: ./db-pass.txt
+
+# volumes:
+#   db_data:
+
+
+# version: '3.8'
+
+# services:
+#   proxy:
+#     build: proxy
+#     image: nginx_proxy
+#     ports:
+#       - "80:80"
+#     depends_on:
+#       - backend
+
+#   backend:
+#     build: backend/
+#     image: backend
+#     expose:
+#       - "8000"
+#     depends_on: 
+#       - db
+#     secrets:
+#       - db-password
+
+#   db:
+#     image: mysql:8.0
+#     environment:
+#       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db-password
+#       MYSQL_DATABASE: example
+#     volumes:
+#       - db_data:/var/lib/mysql
+#     secrets:
+#       - db-password
+
+# secrets:
+#   db-password:
+#     file: ./db-pass.txt
+
+# volumes:
+#   db_data:
